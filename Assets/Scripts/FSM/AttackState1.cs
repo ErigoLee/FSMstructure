@@ -23,9 +23,9 @@ public class AttackState1 : FSMState
 
         destPos = new Vector3();
         destPos = Vector3.zero;
-
+        
         attackTool = gameObject;
-        friendPull = 1.0f;
+        friendPull = 0.5f;
     }
 
     public override void Reason(Transform player, Transform npc, GameObject npc_obj)

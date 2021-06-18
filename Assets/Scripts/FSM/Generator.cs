@@ -17,10 +17,16 @@ public class Generator : MonoBehaviour
 
     private List<GameObject> Enemys;
 
+    public ClearText cleartext;
+
+    //generator stop
+    private bool generatStop;
+    public ChanceText chanceText;
+
     void Start()
     {
         elapsedTime = 0.0f;
-        Timer = 5.0f;
+        Timer = 10.0f;
         interval = 0.0f;
         interval2 = 0.0f;
         interval3 = 0.0f;
@@ -28,6 +34,7 @@ public class Generator : MonoBehaviour
         stage = 1;
         Enemys = new List<GameObject>();
         nextStage = false;
+        generatStop = false;
     }
 
     public void deleteEnemy(GameObject enemy)
@@ -41,18 +48,57 @@ public class Generator : MonoBehaviour
             }
         }
     }
+
+    public void DiePlayer()
+    {
+        generatStop = true;
+        nextStage = false;
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
+        for (int i=0;i<Enemys.Count;i++)
+        {
+            GameObject enemy = Enemys[i];
+            Destroy(enemy);
+        }
+        Enemys.Clear();
+        for(int i=0;i<bullets.Length;i++)
+        {
+            Destroy(bullets[i]);
+        }
+        
+        chanceText.AlertWindow(stage);
+        
+        elapsedTime = 0.0f;
+        interval = 0.0f;
+        interval2 = 0.0f;
+        interval3 = 0.0f;
+        generatStop = false;
+        GameObject player = GameObject.FindWithTag("Player");
+        player.GetComponent<Player>().GiveChance();
+    }
     
     void FixedUpdate()
     {
+        if (generatStop)
+        {
+            
+            return;
+        }
+            
         
         if (stage > 3)
+        {
+            cleartext.SetClear();
             return;
+        }
+            
 
         if(nextStage && (Enemys.Count==0))
         {
             Debug.Log("nextPage!");
             nextStage = false;
             stage++;
+            GameObject player = GameObject.FindWithTag("Player");
+            player.GetComponent<Player>().setStage(stage);
         }
         
 
@@ -71,7 +117,7 @@ public class Generator : MonoBehaviour
             {
                 if (nextStage)
                     return; 
-                if(interval > 1.0)
+                if(interval > 2.5)
                 {
                     float x = Random.Range(-40.0f, 40.0f);
                     float z = Random.Range(-10.0f,10.0f);
@@ -106,7 +152,7 @@ public class Generator : MonoBehaviour
             {
                 if (nextStage)
                     return;
-                if (interval > 1.0)
+                if (interval > 2.5)
                 {
                     float x = Random.Range(-40.0f, 40.0f);
                     float z = Random.Range(-10.0f, 10.0f);
@@ -117,7 +163,7 @@ public class Generator : MonoBehaviour
                     Enemys.Add(instance);
                     interval = 0.0f;
                 }
-                if(interval2 > 1.1)
+                if(interval2 > 2.7)
                 {
                     float x = Random.Range(-40.0f, 40.0f);
                     float z = Random.Range(-10.0f, 10.0f);
@@ -153,7 +199,7 @@ public class Generator : MonoBehaviour
                 if (nextStage)
                     return;
 
-                if (interval > 1.0)
+                if (interval > 2.5)
                 {
                     float x = Random.Range(-40.0f, 40.0f);
                     float z = Random.Range(-10.0f, 10.0f);
@@ -164,7 +210,7 @@ public class Generator : MonoBehaviour
                     Enemys.Add(instance);
                     interval = 0.0f;
                 }
-                if (interval2 > 1.1)
+                if (interval2 > 2.7)
                 {
                     float x = Random.Range(-40.0f, 40.0f);
                     float z = Random.Range(-10.0f, 10.0f);
@@ -175,7 +221,7 @@ public class Generator : MonoBehaviour
                     Enemys.Add(instance2);
                     interval2 = 0.0f;
                 }
-                if(interval3 > 1.2)
+                if(interval3 > 2.9)
                 {
                     float x = Random.Range(-40.0f, 40.0f);
                     float z = Random.Range(-10.0f, 10.0f);

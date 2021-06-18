@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - Generator
   - GR
+  - Bullet
   layers:
   - Default
   - TransparentFX

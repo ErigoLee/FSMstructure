@@ -49,12 +49,12 @@ public class GestureAction : MonoBehaviour
 
         if (handName.Equals("leftHand"))
         {
-            player.GetComponent<Player>().LeftHandGun();
+            player.GetComponent<Player>().chargeLeftBullet();
         }
 
         if(handName.Equals("rightHand"))
         {
-            player.GetComponent<Player>().RightHandGun();
+            player.GetComponent<Player>().chargeRightBullet();
         }
 
 

@@ -29,7 +29,7 @@ public class AttackState3 : FSMState
 
         elapsedTime = 0.0f;
         attackRate = 3.0f;
-        friendPull = 1.0f;
+        friendPull = 0.5f;
     }
 
     public override void Reason(Transform player, Transform npc, GameObject npc_obj)

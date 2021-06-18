@@ -67,6 +67,7 @@ public class GestureSave : MonoBehaviour
         newgesture.SetPosition(pos);
         saveGestures.Add(newgesture);
         Debug.Log("success saved!!");
+        SaveData();
     }
 
     public void SaveData()
@@ -86,7 +87,7 @@ public class GestureSave : MonoBehaviour
         }
 
         string toJson = JsonHelper.ToJson(data, prettyPrint: true);
-        File.WriteAllText(Application.dataPath + "/Scenes/script/data.json", toJson);
+        File.WriteAllText(Application.dataPath + "/Scripts/data.json", toJson);
 
     }
 }

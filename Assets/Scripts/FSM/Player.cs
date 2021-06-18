@@ -25,6 +25,21 @@ public class Player : MonoBehaviour
     private float elaspedTime = 0.0f;
     private float timer = 1.0f;
 
+    //count
+    private int endCount;
+    private int leftCount;
+    private int rightCount;
+
+    //Particle GameObject
+    public GameObject sparksEffect;
+
+    //stage
+    private int stage;
+
+
+    //generator
+    public Generator generator;
+
 
     void Start()
     {
@@ -32,19 +47,15 @@ public class Player : MonoBehaviour
         blurEnabled = false;
         color = panel.color;
         color.a = 0.0f;
+        endCount = 10;
+        leftCount = 1;
+        rightCount = 1;
+        stage = 1;
     }
 
     
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //Transform spwanPoint = transform.GetChild(0).transform;
-            GameObject bullet = Instantiate(attackTool, gun.transform.position, gun.transform.rotation);
-            bullet.GetComponent<Bullet2>().SetForward(gun.transform.right);
-        }
-        */
 
         elaspedTime += Time.deltaTime;
 
@@ -71,21 +82,59 @@ public class Player : MonoBehaviour
         }
 
     }
+    public void setStage(int inputStage)
+    {
+        stage = inputStage;
+    }
+
+    public void chargeLeftBullet()
+    {
+        if (leftCount > endCount)
+        {
+            leftCount = 1;
+        }
+        
+    }
+
+    public void chargeRightBullet()
+    {
+        if (rightCount > endCount)
+        {
+            rightCount = 1;
+        }
+    }
+
     
     public void LeftHandGun()
     {
-        
+        if(stage>1&& leftCount > endCount)
+        {
+            return;
+        }
         GameObject bullet = Instantiate(attackTool, leftGun.transform.position, leftGun.transform.rotation);
-        
-        bullet.GetComponent<Bullet2>().SetForward(leftGun.transform.forward); 
+        Instantiate(sparksEffect,leftGun.transform.position,leftGun.transform.rotation);
+
+
+        bullet.GetComponent<Bullet2>().SetForward(leftGun.transform.forward);
+        if (stage > 1)
+        {
+            leftCount++;
+        }
     }
 
     public void RightHandGun()
     {
-
+        if (stage > 1 && rightCount > endCount)
+        {
+            return;
+        }
         GameObject bullet = Instantiate(attackTool, rightGun.transform.position, rightGun.transform.rotation);
-        
+        Instantiate(sparksEffect, rightGun.transform.position, rightGun.transform.rotation);
         bullet.GetComponent<Bullet2>().SetForward(rightGun.transform.forward);
+        if(stage>1)
+        {
+            rightCount++;
+        }
     }
     
     public void TurnOnBlur()
@@ -104,7 +153,13 @@ public class Player : MonoBehaviour
         if(health <= 0)
         {
             Debug.Log("I'm dead");
+            generator.DiePlayer();
         }
+    }
+
+    public void GiveChance()
+    {
+        health = 100;
     }
 
 }

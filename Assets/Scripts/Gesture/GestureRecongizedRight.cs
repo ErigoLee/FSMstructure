@@ -46,23 +46,16 @@ public class GestureRecongizedRight : MonoBehaviour
                 //GameObject.Find("Panel").GetComponent<FirstNpcDialog>().nextdialogok = false;
             }
 
-            if (!preGesture.name.Equals("Right_rock_v1") && currentGesture.name.Equals("Right_rock_v1"))
+            if (currentGesture.name.Equals("Right_V"))
             {
-                if (!preGesture.name.Equals("Right_rock_v2"))
-                {
-                    GameObject.FindWithTag("GR").GetComponent<GestureAction>().AttackAction("rightHand");
-                }
-            }
-            if (!preGesture.name.Equals("Right_rock_v2") && currentGesture.name.Equals("Right_rock_v2"))
-            {
-                if (!preGesture.name.Equals("Right_rock_v1"))
-                {
-                    GameObject.FindWithTag("GR").GetComponent<GestureAction>().AttackAction("rightHand");
-                }
+                
+                GameObject.FindWithTag("GR").GetComponent<GestureAction>().AttackAction("rightHand");
+
             }
 
             preGesture = currentGesture;
         }
+        
     }
 
     public void LoadData()
